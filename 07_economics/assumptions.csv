@@ -1,0 +1,9 @@
+id,parameter,unit,value,status,required_basis
+A01,tasks_per_period,tasks,,missing,process_statistics
+A02,baseline_time,hours_per_task,,missing,measured_baseline
+A03,assisted_time_including_review,hours_per_task,,missing,measured_pilot
+A04,labor_cost,currency_per_hour,,missing,approved_cost_basis
+A05,initial_investment,currency,,missing,dated_cost_estimate
+A06,operating_cost,currency_per_period,,missing,dated_cost_estimate
+A07,discount_rate,fraction_per_period,,missing,approved_method
+A08,horizon,periods,,missing,agreed_scope

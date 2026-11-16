@@ -1,0 +1,4 @@
+id,title,year,doi,status,full_text_reviewed,checked_on
+S01,Artificial Intelligence Risk Management Framework (AI RMF 1.0),2023,10.6028/NIST.AI.100-1,official_search_record_verified,false,2026-11-16
+S02,Artificial Intelligence Risk Management Framework Generative Artificial Intelligence Profile,2024,10.6028/NIST.AI.600-1,official_search_record_verified,false,2026-11-16
+S03,Secure Software Development Practices for Generative AI and Dual-Use Foundation Models An SSDF Community Profile,2024,10.6028/NIST.SP.800-218A,official_search_record_verified,false,2026-11-16
