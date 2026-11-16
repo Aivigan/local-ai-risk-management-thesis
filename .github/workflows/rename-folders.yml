@@ -1,0 +1,58 @@
+name: Remove folder numbering
+on:
+  push:
+    paths:
+      - '.github/workflows/rename-folders.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Rename folders and update references
+        shell: python
+        run: |
+          from pathlib import Path
+          mapping = {
+              '01_research': 'research',
+              '02_knowledge': 'knowledge',
+              '03_skills': 'skills',
+              '04_resources': 'resources',
+              '05_thesis': 'thesis',
+              '06_solution': 'solution',
+              '07_economics': 'economics',
+              '08_data': 'data',
+              '09_templates': 'templates',
+              '10_project': 'project',
+          }
+          for old, new in mapping.items():
+              if Path(old).exists() and Path(new).exists():
+                  raise RuntimeError(f'Both paths exist: {old}, {new}')
+          for old, new in mapping.items():
+              if Path(old).exists():
+                  Path(old).rename(new)
+          for path in Path('.').rglob('*'):
+              if '.git' in path.parts or '.github' in path.parts:
+                  continue
+              if path.is_file() and path.suffix in {'.md', '.csv'}:
+                  original = path.read_text(encoding='utf-8')
+                  updated = original
+                  for old, new in mapping.items():
+                      updated = updated.replace(old, new)
+                  if updated != original:
+                      path.write_text(updated, encoding='utf-8')
+          for old in mapping:
+              assert not Path(old).exists(), old
+      - name: Commit renamed folders
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Remove folder numbering and update internal links"
+            git push origin HEAD:main
+          fi
